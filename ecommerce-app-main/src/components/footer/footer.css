@@ -1,0 +1,51 @@
+.footer-container {
+  background-color: rgb(29, 29, 29);
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+.footer-contents {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
+}
+.content-title {
+  font-size: 2rem;
+}
+.content-item {
+  margin: 1rem 0;
+  opacity: 0.7;
+}
+.content-item:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.social-media {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  width: 60%;
+  justify-content: flex-end;
+}
+.social-media > a {
+  margin: 0 1.5rem;
+}
+.sm {
+  fill: white;
+}
+.copyrights-container {
+  margin: 2rem 0;
+}
+.copyrights > a {
+  text-decoration: none;
+  color: white;
+}
+.copyrights > a :hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

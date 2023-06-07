@@ -1,0 +1,123 @@
+.cart-items-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2.5rem 0;
+}
+.cart-items-titles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-weight: bold;
+  border-bottom: 1px solid rgb(29, 29, 29);
+  padding-bottom: 2rem;
+  margin: 1rem;
+}
+
+.cart-item-container {
+  margin: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid rgba(29, 29, 29, 0.5);
+}
+.img-name-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 37%;
+}
+.cart-item-name {
+  text-align: center;
+}
+.cart-item-img {
+  width: 5rem;
+  height: 7rem;
+}
+.cart-item-price-container {
+  position: absolute;
+  left: 35%;
+}
+.cart-item-quantity-container {
+  position: absolute;
+  left: 59%;
+}
+.cart-item-subtotal-container {
+  position: absolute;
+  right: 12%;
+}
+.cart-item-clear-container {
+  position: absolute;
+  right: 5%;
+}
+.cart-item-clear:hover {
+  cursor: pointer;
+}
+
+.other-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.other {
+  padding: 1rem;
+  width: 10rem;
+  text-align: center;
+  color: white;
+  border-radius: 1rem;
+  font-weight: 300;
+}
+.continue-shopping {
+  background-color: rgb(90, 197, 81);
+  text-decoration: none;
+}
+.other:hover {
+  transform: scale(1.1);
+  transition: 1s;
+  cursor: pointer;
+}
+.clear-cart {
+  background-color: rgb(197, 90, 81);
+}
+.statement-container {
+  width: 30%;
+  align-self: center;
+  margin-top: 5rem;
+  border: 1px solid rgb(29, 29, 29);
+  padding: 1rem;
+}
+.sc {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+.statement-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.checkout-link {
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(90, 197, 81);
+  font-style: italic;
+}
+.change-quantity {
+  font-size: 1.4rem;
+}
+.change-quantity:hover {
+  cursor: pointer;
+}
+.empty-cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20rem;
+  justify-content: space-between;
+  margin: 3rem 0;
+}
+
+.empty-cart {
+  font-size: 3rem;
+}

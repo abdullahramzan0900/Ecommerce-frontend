@@ -1,0 +1,53 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+.checkout-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 0;
+}
+.checkout-content {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-around;
+}
+.form {
+  margin: 0 5rem;
+}
+input {
+  display: block;
+  width: 20rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  font-size: 1.25rem;
+}
+label {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+.pay-button {
+  margin-top: 2rem;
+  height: 3rem;
+  background-color: rgb(12, 200, 82);
+  border: none;
+  border-radius: 1rem;
+  color: white;
+  font-weight: 200;
+  padding: 1rem 1rem;
+}
+.pay-button:hover {
+  transform: scale(1.1);
+  transition: 0.1s;
+  cursor: pointer;
+}

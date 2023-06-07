@@ -1,0 +1,15 @@
+.cart-adding-button {
+  opacity: 0;
+  width: 100%;
+  height: 3rem;
+  border-radius: 1em;
+  border: none;
+  background-color: rgb(29, 29, 29);
+  color: white;
+}
+.category:hover .cart-adding-button {
+  opacity: 1;
+}
+.product-container:hover .cart-adding-button {
+  opacity: 1;
+}
