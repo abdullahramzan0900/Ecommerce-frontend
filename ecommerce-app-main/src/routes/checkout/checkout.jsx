@@ -106,7 +106,7 @@ const Checkout = () => {
         </div>
         <button className="pay-button">Complete Checkout and Pay</button>
       </div>
-      <Footer />
+      <Footer/>
     </Fragment>
   );
 };

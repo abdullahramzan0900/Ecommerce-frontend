@@ -6,3 +6,5 @@ import throttle from "lodash.throttle";
 export const store = createStore(rootReducer, loadState());
 
 store.subscribe(throttle(() => saveState(store.getState()), 1000));
+
+

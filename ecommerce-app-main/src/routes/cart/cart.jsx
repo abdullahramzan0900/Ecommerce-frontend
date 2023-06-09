@@ -18,11 +18,11 @@ const cartItemsStateSelector = createSelector(makeCartItems, (cartItems) => ({
 const cartItemsActionDispatcher = (dispatch) => ({
   setCartItems: (cartItems) => dispatch(setCartItems(cartItems)),
 });
-
 const Cart = () => {
   const { cartItems } = useSelector(cartItemsStateSelector);
   const { setCartItems } = cartItemsActionDispatcher(useDispatch());
   const [subtotal, setSubtotal] = useState("");
+  console.log(cartItems);
 
   const { user } = useAuth0();
 
@@ -57,7 +57,7 @@ const Cart = () => {
   const increasingCartItem = (e) => {
     const cartItemId = e.target.parentElement.getAttribute("id");
     const [added] = cartItems.filter((product) => {
-      if (product._id.toString() === cartItemId) {
+      if (product._id === cartItemId) {
         return product;
       }
     });
@@ -92,7 +92,7 @@ const Cart = () => {
   const decreasingCartItem = (e) => {
     const cartItemId = e.target.parentElement.getAttribute("id");
     const [decreased] = cartItems.filter((product) => {
-      if (product._id.toString() === cartItemId) {
+      if (product._id === cartItemId) {
         return product;
       }
     });
@@ -110,7 +110,7 @@ const Cart = () => {
   const removingItemFromCart = (e) => {
     const cartItemId = e.target.parentElement.getAttribute("id");
     const [removed] = cartItems.filter((product) => {
-      if (product._id.toString() === cartItemId) {
+      if (product._id === cartItemId) {
         return product;
       }
     });
@@ -120,12 +120,11 @@ const Cart = () => {
 
   useEffect(() => {
     const newCartSubtotal = cartItems.reduce(
-      (total, cartItem) => total + cartItem.quantity * cartItem.price,
+      (total, cartItem) => total + cartItem.quantity * cartItem.Price,
       0
     );
     setSubtotal(newCartSubtotal);
   }, [cartItems]);
-  console.log(cartItems,"cartsitem")
 
   return (
     <Fragment>
@@ -138,17 +137,16 @@ const Cart = () => {
             <span className="cart-item-title">Quantity</span>
             <span className="cart-item-title">Subtotal</span>
           </div>
-        {}
           {cartItems.map((item, i) => (
             <div className="cart-item-container" key={i}>
               <div className="img-name-container">
                 <img className="cart-item-img" src={item.Image} alt="" />
                 <span className="cart-item-name">
-                  {/* {item.title.slice(0, 15)} */}
+            
                 </span>
               </div>
               <div className="cart-item-price-container">
-                <span className="cart-item-price">${item.price}</span>
+                <span className="cart-item-price">${item.Price}</span>
               </div>
               <div className="cart-item-quantity-container">
                 <span className="cart-item-quantity" id={item._id}>
@@ -169,7 +167,7 @@ const Cart = () => {
               </div>
               <div className="cart-item-subtotal-container">
                 <span className="cart-item-subtotal">{`$${(
-                  item.price * item.quantity
+                  item.Price * item.quantity
                 ).toFixed(2)}`}</span>
               </div>
               <div className="cart-item-clear-container" id={item._id}>
@@ -208,17 +206,17 @@ const Cart = () => {
                 subtotal + 9.99
               ).toFixed(2)}`}</span>
             </div>
-
+            {user ? (
               <span className="take-to-checkout ">
                 Proceed to{" "}
                 <Link to="/checkout" className="checkout-link">
                   Checkout{" "}
                 </Link>
-             
+                {user.nickname}?
               </span>
-
-              <span>You need to be logged in to confirm order</span>   
-          
+            ) : (
+              <span>You need to be logged in to confirm order</span>
+            )}
           </div>
         </div>
       ) : (

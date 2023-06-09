@@ -6,7 +6,6 @@ import { makeCartItems } from "../../store/cart/cartSelector";
 import { createSelector } from "reselect";
 import { Fragment } from "react";
 
-
 const cartItemsStateSelector = createSelector(makeCartItems, (cartItems) => ({
   cartItems,
 }));
@@ -16,17 +15,15 @@ const cartItemsActionDispatcher = (dispatch) => ({
 });
 
 const CategoryCard = ({ products }) => {
-
   const { cartItems } = useSelector(cartItemsStateSelector);
   const { setCartItems } = cartItemsActionDispatcher(useDispatch());
 
   const addCartItem = (cartItems, productToAdd) => {
-
+    console.log(cartItems);
     //  If cart contains product to add
-    const existingCartItem = cartItems?.find(
+    const existingCartItem = cartItems.find(
       (item) => item._id === productToAdd._id
     );
-
 
     //  if found increase quantity
     if (existingCartItem) {
@@ -36,32 +33,26 @@ const CategoryCard = ({ products }) => {
           : item
       );
     }
+
     //  if not found return new array with cart item
     return [...cartItems, productToAdd];
   };
 
   const increaseCartItem = (newItemToAdd) => {
-
     setCartItems(addCartItem(cartItems, newItemToAdd));
   };
-  
-
 
   const addingToCart = (e) => {
-
-
+    const productId = e.target.parentElement.getAttribute("id")
     const [added] = products.filter((product) => {
-
-      if (product._id ===e) {
+      if (product._id === productId) {
         return product;
       }
     });
     increaseCartItem(added);
   };
- 
 
   const allProducts = products;
-
 
   if (allProducts.length === 0) {
     return (
@@ -77,21 +68,20 @@ const CategoryCard = ({ products }) => {
         {allProducts?.map((product, i) => {
           return (
             <div className="product-container" key={i} id={product._id}>
-              <img src={product.Image} alt="" className="product-image" />
+              <img src={product.image} alt="" className="product-image" />
               <span className="product-title">
-                {/* {product.title.slice(0, 15)} */}
+              
               </span>
               <div className="product-info">
-                <span className="product-category">{product.Description}</span>
+                {/* <span className="product-category">{product.category}</span> */}
                 <span className="product-price">$ {product.Price}</span>
               </div>
-              <CartButton clicked={()=>{
-                 addingToCart(product._id);
-              }} />
+              <CartButton clicked={addingToCart} />
             </div>
           );
         })}
       </div>
+
     </Fragment>
   );
 };
