@@ -3,50 +3,41 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-function AddProducts({api} ) {
-    console.log(api,"url")
+function AddProducts({ api,open,setopen }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [Date,Setdate]=useState();
-  
-  const [imageurl,setimageurl]=useState();
+  const [Date, Setdate] = useState(null);
+  const [imageurl, setImageUrl] = useState(null);
 
-
-  const handleSubmit = async (api) => {
+  const handleSubmit = async () => {
+    // Form data initialization and appending values
     const formData = new FormData();
-    formData.append("name",name);
-    formData.append("Price",price);
-    formData.append("Description",description);
-    formData.append("TestImage",image);
-    formData.append("Date",Date);
-    var d = new window.Date();
-    console.log( d,"a")
-  
-   d= JSON.stringify(d);
-   d.slice(0,8);
-    Setdate(d);
+    formData.append("name", name);
+    formData.append("Price", price);
+    formData.append("Description", description);
+    formData.append("TestImage", image);
+    formData.append("Date", Date);
 
     try {
-      const response = await fetch(api,{
+      const response = await fetch(api, {
         method: "POST",
         body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-            setimageurl(data);
-        })
+      });
 
       if (!response.ok) {
         throw new Error("Failed to upload the product information!");
       }
 
+      const data = await response.json();
+      setImageUrl(data);
+
       console.log("Product information uploaded successfully!");
-      
     } catch (error) {
       console.error(error);
     }
+    setopen(!open)
   };
 
   const handleImage = (event) => {
@@ -54,54 +45,60 @@ function AddProducts({api} ) {
   };
 
 
+  const handleClose = () => {
+    setopen(false);
+  };
+
   return (
-
-      <>
-
-
-      <label>
-        Name:
-        <input
-          type="text"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          />
-      </label>
-      <br />
-      <label>
-        Price:
-        <input
-          type="number"
-          value={price}
-          onChange={(event) => setPrice(event.target.value)}
-          />
-      </label>
-      <br />
-      <label>
-        Description:
-        <textarea
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
-        />
-      </label>
-      <label>
-        Date:
-<label>{Date}</label>
-      </label>
-      <br />
-      <label>
-        Image:
-        <input type="file" accept="image/*" onChange={handleImage} />
-      </label>
-      <br />
-      <button onClick={()=>{
-        handleSubmit(api)
-      }} type="submit">Add Product</button>
-      {/* <img src={imageurl?.Image} alt="" /> */}
-       
-      </>
+    <>
+      
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            Price:
+            <input
+              type="number"
+              value={price}
+              onChange={(event) => setPrice(event.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            Description:
+            <br></br>
+            <textarea
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          </label>
+          <br></br>
+          <label>
+            Date:
+            <label>{Date}</label>
+          </label>
+          <br />
+          <label>
+            Image:
+            <input type="file" accept="image/*" onChange={handleImage} />
+          </label>
+        </DialogContent>
+        <DialogActions>
+          <button onClick={handleSubmit} type="submit">
+            Add Product
+          </button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
-  }
-
+}
 
 export default AddProducts;

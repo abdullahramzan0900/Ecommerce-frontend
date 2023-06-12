@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,10 +21,9 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Posts from './Posts';
 
 
-
 const pages = [ {
    name:'MenCloths',
-   api:"http://localhost:5000/getProducts"
+   api:"http://localhost:5000/ProductDetail"
 },
 {
   name:'WomenCloths',
@@ -45,6 +44,9 @@ function Admin() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [data,setdata]=useState()
   const [api,setapi]=useState();
+  useEffect(()=>{
+
+  },[data])
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
