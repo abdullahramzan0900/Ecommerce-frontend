@@ -182,7 +182,7 @@ const Cart = () => {
             </div>
           ))}
           <div className="other-buttons">
-            <Link to="/shop" className=" other continue-shopping">
+            <Link to="/" className=" other continue-shopping">
               Continue Shopping
             </Link>
             <span className="other clear-cart" onClick={clearCartItems}>
@@ -222,12 +222,12 @@ const Cart = () => {
       ) : (
         <div className="empty-cart-container">
           <span className="empty-cart">Your cart is empty :(</span>
-          <Link to="/shop" className=" other continue-shopping">
+          <Link to="/" className=" other continue-shopping">
             Continue Shopping
           </Link>
         </div>
       )}
-      <Footer />
+
     </Fragment>
   );
 };

@@ -10,6 +10,8 @@ import Checkout from "./routes/checkout/checkout";
 import Admin from "./Admin/Admin";
 
 import Cart from "./routes/cart/cart.jsx";
+import Login from "./components/Login/Login";
+import Signup from "./components/SignUp/Signup";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,8 +20,8 @@ function App() {
       element: <Home />,
     },
     {
-      path: "shop",
-      element: <Shop />,
+      // path: "shop",
+      // element: <Shop />,
     },
     {
       path: "electronics",
@@ -50,6 +52,15 @@ function App() {
     {
       path:'Admin',
       element:<Admin/>
+    },
+    {
+      path:"Login",
+      element:<Login/>
+    },
+    {
+      path:'Signup',
+      element:<Signup/>
+      
     }
   ]);
 

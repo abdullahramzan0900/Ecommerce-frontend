@@ -3,6 +3,7 @@ import "./categories.css";
 
 const CategoriesBar = ({ categories }) => {
   const categoryNames = categories;
+  console.log(categoryNames,"categories")
 
   return (
     <div className="category-names-container">
@@ -14,6 +15,7 @@ const CategoriesBar = ({ categories }) => {
             key={i}
           >
             {categoryName}
+    
           </Link>
         );
       })}

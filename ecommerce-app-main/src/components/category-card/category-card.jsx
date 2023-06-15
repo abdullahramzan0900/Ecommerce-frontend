@@ -68,7 +68,7 @@ const CategoryCard = ({ products }) => {
         {allProducts?.map((product, i) => {
           return (
             <div className="product-container" key={i} id={product._id}>
-              <img src={product.image} alt="" className="product-image" />
+              <img src={product.Image} alt="" className="product-image" />
               <span className="product-title">
               
               </span>

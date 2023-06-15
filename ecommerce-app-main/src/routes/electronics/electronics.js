@@ -18,7 +18,7 @@ const Electronics = () => {
       <Navbar />
       <h1 className="electronics-title">Find Electronic Items</h1>
       <CategoryCard products={electronics} />
-      <Footer />
+
     </Fragment>
   );
 };

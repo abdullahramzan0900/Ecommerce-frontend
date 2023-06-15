@@ -1,31 +1,41 @@
 // import "./category-card.css";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import AddProducts from "./AddProducts";
 import EditProduct from "./EditProduct";
 import "./Index.css";
 import Button from "@mui/material/Button";
 
-const Posts = ({ products, api }) => {
+const Posts = ({ data, api,setapi,setdata }) => {
   const [open, Setopen] = useState(false); // for model
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [Date, Setdate] = useState(null);
-  const [show,setshow]=useState(false)// for editmodel
+  const [show, setshow] = useState(false); // for editmodel
   const [imageurl, setImageUrl] = useState(null);
-  const [id,setid]=useState();
+  const [id, setid] = useState();
+  useEffect(() => {
 
+  getData(api);
+  
+  },[data]);
+  async function getData(url) {
 
-  const allProducts = products;
-
+    setapi(url);
+    const dataResponse = await fetch(url);
+    // console.log(dataResponse, "dataresponse");
+    const dataArr = await dataResponse.json();
+    setdata(dataArr);
+    
+    // console.log(dataArr, "dataarr");
+  }
+  const allProducts = data;
   const DelProducts = async (id) => {
-
     try {
       const response = await fetch(`${api}/${id}`, {
         method: "DELETE",
-      
       });
 
       if (!response.ok) {
@@ -33,7 +43,7 @@ const Posts = ({ products, api }) => {
       }
 
       const data = await response.json();
-    //   SetAllProducts(data);
+      //   SetAllProducts(data);
       // setImageUrl(data);
 
       console.log("Product information uploaded successfully!");
@@ -41,9 +51,7 @@ const Posts = ({ products, api }) => {
       console.error(error);
     }
   };
-  const EditProducts=async (id)=>{
-
-
+  const EditProducts = async (id) => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("Price", price);
@@ -51,25 +59,24 @@ const Posts = ({ products, api }) => {
     formData.append("TestImage", image);
     formData.append("Date", Date);
     try {
-        const response = await fetch(`${api}/${id}`, {
-          method: "Put",
-          body:formData
+      const response = await fetch(`${api}/${id}`, {
+        method: "Put",
+        body: formData,
+      });
 
-        });
-  
-        if (!response.ok) {
-          throw new Error("Failed to upload the product information!");
-        }
-  
-        const data = await response.json();
-      //   SetAllProducts(data);
-        // setImageUrl(data);
-  
-        console.log("Product information uploaded successfully!");
-      } catch (error) {
-        console.error(error);
+      if (!response.ok) {
+        throw new Error("Failed to upload the product information!");
       }
-  }
+
+      const data = await response.json();
+      //   SetAllProducts(data);
+      // setImageUrl(data);
+
+      console.log("Product information uploaded successfully!");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Fragment>
@@ -79,11 +86,7 @@ const Posts = ({ products, api }) => {
             onClick={() => {
               Setopen(!open);
             }}
-            style={
-              {
-              
-              }
-            }
+            style={{}}
           >
             Add Product
           </Button>
@@ -105,26 +108,29 @@ const Posts = ({ products, api }) => {
                 >
                   Delete
                 </Button>
-                <Button onClick={()=>{
-                     setid(product._id);
-                    setshow(!show)
-                }}>Edit</Button>
-                
+                <Button
+                  onClick={() => {
+                    setid(product._id);
+                    setshow(!show);
+                  }}
+                >
+                  Edit
+                </Button>
               </div>
             );
           })}
         </div>
-          {
-              show && <EditProduct show={show} setshow={setshow} api={api} Id={id}/>
-
-          }
+        {show && (
+          <EditProduct show={show} setshow={setshow} api={api} Id={id} />
+        )}
         <div>
-          <AddProducts open={open} api={api} setopen={Setopen}   product={products} />
-                
+          <AddProducts
+            open={open}
+            api={api}
+            setopen={Setopen}
+            product={data}
+          />
         </div>
-
-
-
       </>
     </Fragment>
   );

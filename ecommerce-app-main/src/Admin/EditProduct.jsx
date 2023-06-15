@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 
-function EditProduct({ api, show, setshow, Id }) {
-    console.log(Id);    
+function EditProduct({ api, show, setshow, Id,renderfunc }) {
+
+  console.log(Id);
   const [name, setName] = useState("");
   const [Price, setPrice] = useState("");
   const [Description, setDescription] = useState("");
   const [Image, setImage] = useState(null);
   const [Date, Setdate] = useState(null);
-  const [AllProducts,SetAllProducts]=useState()
+  const [AllProducts, SetAllProducts] = useState();
   const [imageurl, setImageUrl] = useState(null);
+
 
   const EditProducts = async (Id) => {
     const formData = new FormData();
@@ -21,16 +23,9 @@ function EditProduct({ api, show, setshow, Id }) {
     formData.append("TestImage", Image);
     formData.append("Date", Date);
     try {
-        console.log(formData,"aaa")
-      const response = await fetch(`${api}/${Id}`, {
-        method: "put",
-        body: {
-            "name":name,
-              "Price":Price,
-              "Description":Description,
-              "TestImage":Image,
-              "Date":Date
-        },
+      const response = await fetch(`${api}/${Id}/update`, {
+        method: "Put",
+        body: formData,
       });
 
       if (!response.ok) {
@@ -38,9 +33,7 @@ function EditProduct({ api, show, setshow, Id }) {
       }
 
       const data = await response.json();
-        SetAllProducts(data);
-
-
+      SetAllProducts(data);
       console.log("Product information update successfully!");
     } catch (error) {
       console.error(error);
@@ -63,13 +56,10 @@ function EditProduct({ api, show, setshow, Id }) {
             <input
               type="text"
               value={name}
-              onChange={(event) =>{
-                  setName(event.target.value)
-                  console.log(name,"namee")
-                
-                }
-      
-            }
+              onChange={(event) => {
+                setName(event.target.value);
+                console.log(name, "namee");
+              }}
             />
           </label>
           <br />
@@ -105,7 +95,7 @@ function EditProduct({ api, show, setshow, Id }) {
           <button
             onClick={() => {
               EditProducts(Id);
-              setshow(false)
+              setshow(false);
             }}
             type="submit"
           >

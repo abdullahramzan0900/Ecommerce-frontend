@@ -18,7 +18,7 @@ const WomensClothing = () => {
       <Navbar />
       <h1 className="womens-title">Find Amazing Items for Her</h1>
       <CategoryCard products={womenclothing} />
-      <Footer />
+     
     </Fragment>
   );
 };

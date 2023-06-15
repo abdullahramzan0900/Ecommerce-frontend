@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
 
-function AddProducts({ api,open,setopen }) {
+function AddProducts({ api, open, setopen }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -19,6 +19,9 @@ function AddProducts({ api,open,setopen }) {
     formData.append("Description", description);
     formData.append("TestImage", image);
     formData.append("Date", Date);
+
+
+    console.log(formData, "formData =====>");
 
     try {
       const response = await fetch(api, {
@@ -37,21 +40,18 @@ function AddProducts({ api,open,setopen }) {
     } catch (error) {
       console.error(error);
     }
-    setopen(!open)
+    setopen(!open);
   };
 
   const handleImage = (event) => {
     setImage(event.target.files[0]);
   };
-
-
   const handleClose = () => {
     setopen(false);
   };
 
   return (
     <>
-      
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <label>
