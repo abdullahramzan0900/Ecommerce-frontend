@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,12 +15,14 @@ import AppBar from '@mui/material/AppBar';
 import AdbIcon from '@mui/icons-material/Adb'; 
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [response, setResponse] = useState('');
+  const [Responsee, setResponse] = useState('');
+  const navigate=useNavigate()
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,13 +41,18 @@ function Login() {
         // Login successful
         const data = await response.json();
         setResponse(data);
-        console.log(data);
+        console.log(data.name,"name");
+
       } else {
         // Login failed
         console.log('Login failed');
       }
     } catch (error) {
       console.log('Error:', error);
+    }
+    if(!undefined && Responsee.name){
+        localStorage.setItem('name',Responsee.name);
+        navigate(`/`);
     }
   };
 
@@ -58,6 +65,7 @@ function Login() {
   const handleChange2 = (event) => {
     setPassword(event.target.value);
   };
+
 
   return (
     <>
@@ -137,17 +145,20 @@ function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={()=>{
+                      
+                }}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link to={"/ForgetPassword"}  variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link to={"/Signup"} variant="body2">
+                  <Link variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

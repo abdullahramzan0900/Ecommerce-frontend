@@ -19,8 +19,14 @@ const cartItemsActionDispatcher = (dispatch) => ({
   setCartItems: (cartItems) => dispatch(setCartItems(cartItems)),
 });
 const Cart = () => {
+  const [localdata,Setlocaldata]=useState();
   const { cartItems } = useSelector(cartItemsStateSelector);
   const { setCartItems } = cartItemsActionDispatcher(useDispatch());
+  useEffect(() => {
+    var x = localStorage.getItem("name");
+    Setlocaldata(x);
+  }, []);
+
   const [subtotal, setSubtotal] = useState("");
   console.log(cartItems);
 
@@ -206,13 +212,13 @@ const Cart = () => {
                 subtotal + 9.99
               ).toFixed(2)}`}</span>
             </div>
-            {user ? (
+            {localdata ? (
               <span className="take-to-checkout ">
                 Proceed to{" "}
                 <Link to="/checkout" className="checkout-link">
                   Checkout{" "}
                 </Link>
-                {user.nickname}?
+                {localdata}?
               </span>
             ) : (
               <span>You need to be logged in to confirm order</span>

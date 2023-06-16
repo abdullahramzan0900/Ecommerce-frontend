@@ -12,6 +12,7 @@ import Admin from "./Admin/Admin";
 import Cart from "./routes/cart/cart.jsx";
 import Login from "./components/Login/Login";
 import Signup from "./components/SignUp/Signup";
+import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
 
 function App() {
   const router = createBrowserRouter([
@@ -60,6 +61,11 @@ function App() {
     {
       path:'Signup',
       element:<Signup/>
+      
+    },
+    {
+      path:'ForgetPassword',
+      element:<ForgetPassword/>
       
     }
   ]);

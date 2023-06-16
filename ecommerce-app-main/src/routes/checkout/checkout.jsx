@@ -3,9 +3,15 @@ import { Fragment } from "react";
 import Navbar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState,useEffect } from "react";
 
 const Checkout = () => {
   // const { user } = useAuth0();
+  const [localdata,Setlocaldata]=useState();
+  useEffect(() => {
+    var x = localStorage.getItem("name");
+    Setlocaldata(x);
+  }, []);
   // const email = user.email;
   return (
     <Fragment>
@@ -35,7 +41,7 @@ const Checkout = () => {
               </label>
               <label for="email">
                 Email
-                <input type="email" placeholder="abdullah" required />
+                <input  defaultValue={localdata} type="email"  required />
               </label>
               <label for="address">
                 Address
@@ -63,48 +69,9 @@ const Checkout = () => {
               </label>
             </form>
           </div>
-          <div className="form">
-            <form className=" payment-info">
-              <h1>Payment Info</h1>
-              <label for="card-holder">
-                Name on Card
-                <input
-                  type="text"
-                  placeholder="Name on card"
-                  required
-                  id="card-holder"
-                />
-              </label>
-              <label for="card-number">
-                Debit Card Number
-                <input
-                  type="number"
-                  placeholder="xxxx-xxxx-xxxx-xxxx"
-                  required
-                  max={19}
-                  minLength={19}
-                  id="card-number"
-                />
-              </label>
-              <label for="cvc">
-                CVC
-                <input
-                  type="number"
-                  placeholder="CVC"
-                  max={3}
-                  minLength={3}
-                  required
-                  id="cvc"
-                />
-              </label>
-              <label for="card-month">
-                Month
-                <input type="month" required />
-              </label>
-            </form>
-          </div>
+
         </div>
-        <button className="pay-button">Complete Checkout and Pay</button>
+        <button className="pay-button">Complete Checkout</button>
       </div>
  
     </Fragment>

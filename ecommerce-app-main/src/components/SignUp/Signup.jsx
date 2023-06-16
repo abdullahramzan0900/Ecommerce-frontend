@@ -20,6 +20,8 @@ import { Link } from "react-router-dom";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (event) => {
     setEmail(event.target.value);
@@ -31,6 +33,16 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailPattern.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    } else {
+      setEmailError("");
+    }
 
     try {
       const response = await fetch("http://localhost:5000/api/register/", {
@@ -48,9 +60,10 @@ function Signup() {
         // Registration successful
         const data = await response.json();
         console.log(data);
+        setSuccessMessage("Registration successful!");
       } else {
         // Registration failed
-        console.log("Registration failed");
+        setSuccessMessage("Registration failed");
       }
     } catch (error) {
       console.log("Error:", error);
@@ -99,7 +112,12 @@ function Signup() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -111,6 +129,8 @@ function Signup() {
                 autoFocus
                 value={email}
                 onChange={handleChange}
+                error={Boolean(emailError)}
+                helperText={emailError}
               />
               <TextField
                 margin="normal"
@@ -125,10 +145,19 @@ function Signup() {
                 onChange={handleChange2}
               />
 
-          
-<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
                 Sign up
               </Button>
+              {successMessage && (
+                <Typography variant="body2" color="success">
+                  {successMessage}
+                </Typography>
+              )}
               <Grid container>
                 <Grid item xs>
                   {/* <Link  variant="body2"></Link> */}
@@ -141,7 +170,6 @@ function Signup() {
               </Grid>
             </Box>
           </Box>
-   
         </Container>
       </ThemeProvider>
     </>
