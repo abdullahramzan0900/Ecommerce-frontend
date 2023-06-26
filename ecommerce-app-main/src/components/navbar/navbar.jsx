@@ -50,10 +50,10 @@ function ResponsiveAppBar() {
   const [localdata, Setlocaldata] = useState("");
   const [categories] = useFetcher(requests.categories);
   const navigate = useNavigate();
-  useEffect(() => {
-    var x = localStorage.getItem("name");
-    Setlocaldata(x);
-  }, []);
+  // useEffect(() => {
+  //   var x = localStorage.getItem("name");
+  //   Setlocaldata(x);
+  // }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

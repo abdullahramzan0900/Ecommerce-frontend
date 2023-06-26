@@ -9,8 +9,8 @@ const Checkout = () => {
   // const { user } = useAuth0();
   const [localdata,Setlocaldata]=useState();
   useEffect(() => {
-    var x = localStorage.getItem("name");
-    Setlocaldata(x);
+    // var x = localStorage.getItem("name");
+    // Setlocaldata(x);
   }, []);
   // const email = user.email;
   return (

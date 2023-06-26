@@ -9,14 +9,13 @@ import Footer from "../../components/footer/footer";
 const WomensClothing = () => {
   const [womenclothingProducts] = useFetcher(requests.womenclothing);
 
-  const womenclothing = womenclothingProducts.map((product) => {
+  const womenclothing = womenclothingProducts?.map((product) => {
     return { ...product, quantity: 1 };
   });
 
   return (
     <Fragment>
       <Navbar />
-      <h1 className="womens-title">Find Amazing Items for Her</h1>
       <CategoryCard products={womenclothing} />
      
     </Fragment>

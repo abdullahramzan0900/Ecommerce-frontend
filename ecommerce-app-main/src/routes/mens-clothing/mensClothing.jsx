@@ -17,7 +17,7 @@
     return (
       <Fragment>
         <Navbar />
-        <h1 className="mens-title">Find Amazing Products For Men</h1>
+        {/* <h1 className="mens-title">Find Amazing Products For Men</h1> */}
         <CategoryCard products={mensClothing} />
 
       </Fragment>

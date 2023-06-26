@@ -15,7 +15,7 @@ const Jewelery = () => {
   return (
     <Fragment>
       <Navbar />
-      <h1 className="jewelery-title">Find Beautiful Jewelery Items</h1>
+     
       <CategoryCard products={jewelery} />
 
     </Fragment>

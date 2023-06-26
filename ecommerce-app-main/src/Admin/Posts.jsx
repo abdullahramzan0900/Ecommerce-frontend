@@ -1,78 +1,31 @@
-// import "./category-card.css";
-
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import AddProducts from "./AddProducts";
 import EditProduct from "./EditProduct";
 import "./Index.css";
 import Button from "@mui/material/Button";
 
-const Posts = ({ data, api,setapi,setdata }) => {
-  const [open, Setopen] = useState(false); // for model
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
-  const [Date, Setdate] = useState(null);
-  const [show, setshow] = useState(false); // for editmodel
-  const [imageurl, setImageUrl] = useState(null);
-  const [id, setid] = useState();
-  useEffect(() => {
+const Posts = ({ data, api, setdata }) => {
+  const [open, setOpen] = useState(false); // for model
+  const [show, setShow] = useState(false); // for edit model
+  const [id, setId] = useState();
 
-  getData(api);
-  
-  },[data]);
-  async function getData(url) {
-
-    setapi(url);
-    const dataResponse = await fetch(url);
-    // console.log(dataResponse, "dataresponse");
-    const dataArr = await dataResponse.json();
-    setdata(dataArr);
-    
-    // console.log(dataArr, "dataarr");
-  }
   const allProducts = data;
-  const DelProducts = async (id) => {
+
+  const deleteProduct = async (id) => {
     try {
       const response = await fetch(`${api}/${id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload the product information!");
+        throw new Error("Failed to delete the product!");
       }
 
-      const data = await response.json();
-      //   SetAllProducts(data);
-      // setImageUrl(data);
+      console.log("Product deleted successfully!");
 
-      console.log("Product information uploaded successfully!");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const EditProducts = async (id) => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("Price", price);
-    formData.append("Description", description);
-    formData.append("TestImage", image);
-    formData.append("Date", Date);
-    try {
-      const response = await fetch(`${api}/${id}`, {
-        method: "Put",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to upload the product information!");
-      }
-
-      const data = await response.json();
-      //   SetAllProducts(data);
-      // setImageUrl(data);
-
-      console.log("Product information uploaded successfully!");
+      // Update the data prop with the new data
+      const updatedData = data.filter((product) => product._id !== id);
+      setdata(updatedData);
     } catch (error) {
       console.error(error);
     }
@@ -82,54 +35,33 @@ const Posts = ({ data, api,setapi,setdata }) => {
     <Fragment>
       <>
         <div className="add-button">
-          <Button
-            onClick={() => {
-              Setopen(!open);
-            }}
-            style={{}}
-          >
-            Add Product
-          </Button>
+          <Button onClick={() => setOpen(!open)}>Add Product</Button>
         </div>
         <div className="products-container">
-          {allProducts?.map((product, i) => {
-            return (
-              <div className="product-container" key={i} id={product._id}>
-                <img src={product.Image} alt="" className="product-image" />
-                <span className="product-title"></span>
-                <div className="product-info">
-                  {/* <span className="product-category">{product.category}</span> */}
-                  <span className="product-price">$ {product.Price}</span>
-                </div>
-                <Button
-                  onClick={() => {
-                    DelProducts(product._id);
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  onClick={() => {
-                    setid(product._id);
-                    setshow(!show);
-                  }}
-                >
-                  Edit
-                </Button>
+          {allProducts?.map((product) => (
+            <div className="product-container" key={product._id}>
+              <img src={product.Image} alt="" className="product-image" />
+              <span className="product-title"></span>
+              <div className="product-info">
+                <span className="product-price">$ {product.Price}</span>
               </div>
-            );
-          })}
+              <Button onClick={() => deleteProduct(product._id)}>
+                Delete
+              </Button>
+              <Button
+                onClick={() => {
+                  setId(product._id);
+                  setShow(true);
+                }}
+              >
+                Edit
+              </Button>
+            </div>
+          ))}
         </div>
-        {show && (
-          <EditProduct show={show} setshow={setshow} api={api} Id={id} />
-        )}
+        {show && <EditProduct show={show} setshow={setShow} api={api} id={id} />}
         <div>
-          <AddProducts
-            open={open}
-            api={api}
-            setopen={Setopen}
-            product={data}
-          />
+          <AddProducts open={open} api={api} setopen={setOpen} />
         </div>
       </>
     </Fragment>

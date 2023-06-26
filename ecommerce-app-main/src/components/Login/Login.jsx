@@ -1,58 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import AdbIcon from '@mui/icons-material/Adb'; 
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import AdbIcon from "@mui/icons-material/Adb";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [Responsee, setResponse] = useState('');
-  const navigate=useNavigate()
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [Responsee, setResponse] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/login/', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/login/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name,
           password,
         }),
       });
+      console.log("Res", response);
       if (response.ok) {
         // Login successful
         const data = await response.json();
         setResponse(data);
-        console.log(data.name,"name");
-
+        console.log(data.name, "name");
+        if(data.status==="userfound")
+        {
+            navigate("/");
+        }
       } else {
         // Login failed
-        console.log('Login failed');
+        console.log("Login failed");
       }
     } catch (error) {
-      console.log('Error:', error);
-    }
-    if(!undefined && Responsee.name){
-        localStorage.setItem('name',Responsee.name);
-        navigate(`/`);
+      console.log("Error:", error);
     }
   };
 
@@ -66,13 +65,12 @@ function Login() {
     setPassword(event.target.value);
   };
 
-
   return (
     <>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -80,12 +78,12 @@ function Login() {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
               }}
             >
               LOGO
@@ -99,18 +97,23 @@ function Login() {
           <Box
             sx={{
               marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -145,21 +148,20 @@ function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={()=>{
-                      
-                }}
+                onClick={() => {}}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to={"/ForgetPassword"}  variant="body2">
+                  <Link to={"/ForgetPassword"} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link variant="body2">
                     {"Don't have an account? Sign Up"}
+
                   </Link>
                 </Grid>
               </Grid>
@@ -172,5 +174,3 @@ function Login() {
 }
 
 export default Login;
-
-               

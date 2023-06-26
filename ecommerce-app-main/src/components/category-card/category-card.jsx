@@ -4,7 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCartItems } from "../../store/cart/cartAction";
 import { makeCartItems } from "../../store/cart/cartSelector";
 import { createSelector } from "reselect";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import {
+  Badge,
+  Button,
+  Card,
+  Image,
+  List,
+  message,
+  Rate,
+  Spin,
+  Typography,
+  Select,
+} from "antd";
+
 
 const cartItemsStateSelector = createSelector(makeCartItems, (cartItems) => ({
   cartItems,
@@ -17,6 +30,11 @@ const cartItemsActionDispatcher = (dispatch) => ({
 const CategoryCard = ({ products }) => {
   const { cartItems } = useSelector(cartItemsStateSelector);
   const { setCartItems } = cartItemsActionDispatcher(useDispatch());
+
+  const [state,setstate]=useState([])
+  // useEffect(()=>{
+  //   setstate(allProducts);
+  // },[state])
 
   const addCartItem = (cartItems, productToAdd) => {
     console.log(cartItems);
@@ -43,7 +61,9 @@ const CategoryCard = ({ products }) => {
   };
 
   const addingToCart = (e) => {
-    const productId = e.target.parentElement.getAttribute("id")
+    console.log(e.target.parentElement,"aa")
+    const productId = e.target.parentElement.getAttribute("id");
+    
     const [added] = products.filter((product) => {
       if (product._id === productId) {
         return product;
@@ -52,7 +72,7 @@ const CategoryCard = ({ products }) => {
     increaseCartItem(added);
   };
 
-  const allProducts = products;
+  var allProducts = products;
 
   if (allProducts.length === 0) {
     return (
@@ -62,26 +82,105 @@ const CategoryCard = ({ products }) => {
     );
   }
 
+function setSortOrder(value){
+  console.log("sss")
+  if(value==="lowHigh")
+  { console.log("aaa");
+  allProducts= allProducts.sort((a, b) => parseFloat(a.Price) - parseFloat(b.Price));
+  setstate(allProducts);
+  console.log(allProducts,"allproducts")
+
+  }
+  else if(value==="highLow")
+  {
+    allProducts= allProducts.sort((a, b) => parseFloat(b.Price) - parseFloat(a.Price));
+    setstate(allProducts);  
+    console.log(allProducts,"allproducts")
+  }
+}
+
   return (
     <Fragment>
-      <div className="products-container">
-        {allProducts?.map((product, i) => {
-          return (
-            <div className="product-container" key={i} id={product._id}>
-              <img src={product.Image} alt="" className="product-image" />
-              <span className="product-title">
-              
-              </span>
-              <div className="product-info">
-                {/* <span className="product-category">{product.category}</span> */}
-                <span className="product-price">$ {product.Price}</span>
-              </div>
-              <CartButton clicked={addingToCart} />
-            </div>
-          );
-        })}
-      </div>
+      <div className="productsContainer">
+        <div>
+          <Typography.Text>View Items Sorted By: </Typography.Text>
+          <Select
+            onChange={(value) => {
+              setSortOrder(value);
+            }}
+            defaultValue={"aa"}
+            options={[
 
+              {
+                label: "Price Low to High",
+                value: "lowHigh",
+              },
+              {
+                label: "Price High to Low",
+                value: "highLow",
+              },
+            ]}
+          ></Select>
+        </div>
+
+        <List >
+          <div className="main-grid">
+            {allProducts?.map((item, index) => {
+              return (
+                <div id={item._id}>
+                       <CartButton clicked={addingToCart} /> <Badge.Ribbon
+                    className="itemCardBadge"
+                    text={`${item.Price/item.Price + (item.Price * 20) / 100  }% Off`}
+                    color="pink"
+                    id={item._id}
+                  > 
+                    <Card
+                      className="itemCard"
+                      title={item.title}
+                      key={index}
+                      id={item._id}
+                      cover={
+                        <Image className="itemCardImage" src={item.Image} />
+                      }
+                      actions={[<Rate allowHalf disabled value={"4"} />]}
+                    >
+                      <Card.Meta
+                        title={
+                          <Typography.Paragraph>
+                            Price: ${item.Price}{" "}
+                            <Typography.Text delete type="danger">
+                              $
+                              {parseFloat(
+                                item.Price + (item.Price * 20) / 100
+                              ).toFixed(2)}
+                            </Typography.Text>
+                          </Typography.Paragraph>
+                        }
+                        description={
+                          <Typography.Paragraph
+                            style={{
+                              paddingBottom: '70px',
+                            }}
+                            ellipsis={{
+                              rows: 2,
+                              expandable: true,
+                              symbol: "more",
+                            }}
+                            >
+                            {item?.Description}
+                          </Typography.Paragraph>
+                        }
+                      ></Card.Meta>
+     
+                    </Card>
+                  </Badge.Ribbon>
+                </div>
+              );
+            })}
+          </div>
+          {/* // dataSource={getSortedItems()} */}
+        </List>
+      </div>
     </Fragment>
   );
 };

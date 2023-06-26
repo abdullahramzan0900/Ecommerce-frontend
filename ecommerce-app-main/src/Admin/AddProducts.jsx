@@ -19,8 +19,6 @@ function AddProducts({ api, open, setopen }) {
     formData.append("Description", description);
     formData.append("TestImage", image);
     formData.append("Date", Date);
-
-
     console.log(formData, "formData =====>");
 
     try {
