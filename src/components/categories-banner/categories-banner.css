@@ -1,0 +1,12 @@
+.category:hover {
+  cursor: pointer;
+}
+.categories-title {
+  padding-left: 1rem;
+}
+
+.cart-adding-button:hover {
+  cursor: pointer;
+  color: black;
+  background-color: rgb(182, 182, 182);
+}

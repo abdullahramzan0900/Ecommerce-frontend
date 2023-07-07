@@ -1,0 +1,31 @@
+.add-button{
+display: flex;
+justify-content: end;
+}
+.icon-div{
+    width: 100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+.button-admin-order{
+        /* padding: 6px 8px !important; */
+        color: #fff !important;
+        cursor: pointer;
+        background-color: #1976d2 !important;
+        font-size: 16px;
+        /* margin-top: 2em !important; */
+        border: none;
+}
+.button-admin-logout{
+    /* padding: 6px 8px !important; */
+    color: #fff !important;
+    background-color: #1976d2 !important;
+    font-size: 16px;
+    cursor: pointer;
+    /* margin-top: 2em !important; */
+    border: none;
+}
+.add-prod-btn{
+    margin-top: 1em !important; 
+}

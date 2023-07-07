@@ -1,0 +1,19 @@
+.category-names-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: rgb(29, 29, 29);
+  color: white;
+  border-top: 0.1px solid white;
+  height: 2rem;
+  align-items: center;
+}
+.category-name {
+  opacity: 0.7;
+  color: white;
+  text-decoration: none;
+}
+.category-name:hover {
+  opacity: 1;
+  cursor: pointer;
+}
